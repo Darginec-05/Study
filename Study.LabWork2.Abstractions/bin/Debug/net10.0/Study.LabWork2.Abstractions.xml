@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Study.LabWork2.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto">
+            <summary>
+            Представляет результат подсчета простых чисел
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.PrimeCount">
+            <summary>
+            Количество найденных простых чисел в заданном диапазоне
+            </summary>
+            <remarks>
+            Для диапазона 1-10000 ожидаемое значение: 1229 простых чисел
+            Используется для проверки корректности работы алгоритма
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.ExecutionTime">
+            <summary>
+            Время выполнения подсчета от начала до конца
+            </summary>
+            <remarks>
+            Измеряется с помощью Stopwatch с высоким разрешением.
+            Включает время на создание потоков, проверку чисел и синхронизацию.
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.ThreadCount">
+            <summary>
+            Количество потоков, использованных для параллельного подсчета
+            </summary>
+            <remarks>
+            Диапазон значений зависит от параметров запуска.
+            Обычно используется 2-8 потоков для оптимальной производительности.
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.SynchronizationType">
+            <summary>
+            Тип используемой синхронизации
+            </summary>
+            <remarks>
+            Возможные значения:
+            - "Monitor (lock)" - легковесная синхронизация на основе монитора
+            - "Mutex" - синхронизация с использованием мьютекса
+            - "Semaphore" - синхронизация с использованием семафора
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.FoundPrimes">
+            <summary>
+            Список найденных простых чисел
+            </summary>
+            <remarks>
+            Используется для отладки и проверки корректности подсчета.
+            Может быть большим (до 1229 элементов), поэтому в production
+            рекомендуется отключать сбор этой информации.
+            </remarks>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.ToString">
+            <summary>
+            Возвращает форматированное строковое представление результата
+            </summary>
+            <returns>
+            Строка с информацией о типе синхронизации, количестве простых чисел,
+            времени выполнения и количестве потоков
+            </returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.ToShortString">
+            <summary>
+            Возвращает краткое строковое представление для сравнения
+            </summary>
+            <returns>Строка с ключевыми параметрами в компактном формате</returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.DtoModels.PrimeCountResultDto.IsValid(System.Int32)">
+            <summary>
+            Проверяет корректность подсчета
+            </summary>
+            <param name="expectedCount">Ожидаемое количество простых чисел</param>
+            <returns>true, если подсчет выполнен корректно</returns>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.IPrimeCounter">
+            <summary>
+            Общий интерфейс для всех версий счетчика простых чисел
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.IPrimeCounter.CountPrimes(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Запускает подсчет простых чисел в заданном диапазоне
+            </summary>
+            <param name="start">Начало диапазона (включительно)</param>
+            <param name="end">Конец диапазона (включительно)</param>
+            <param name="threadCount">Количество потоков для подсчета</param>
+            <returns>Результат подсчета</returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask1.IPrimeCounter.GetVersionName">
+            <summary>
+            Возвращает название версии счетчика
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ProcessingResultDto">
+            <summary>
+            Представляет результат обработки наборов чисел
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ProcessingResultDto.Results">
+            <summary>
+            Список результатов по каждому набору
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ProcessingResultDto.TotalSum">
+            <summary>
+            Общая сумма всех наборов
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ProcessingResultDto.ExecutionTime">
+            <summary>
+            Время выполнения обработки
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ProcessingResultDto.ProcessedSetsCount">
+            <summary>
+            Количество обработанных наборов
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ResultEntryDto">
+            <summary>
+            Представляет результат обработки одного набора чисел
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ResultEntryDto.SetNumber">
+            <summary>
+            Номер набора чисел (порядковый номер от 1 до 15)
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ResultEntryDto.Sum">
+            <summary>
+            Сумма всех чисел в наборе
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ResultEntryDto.ThreadId">
+            <summary>
+            Идентификатор управляемого потока, выполнившего обработку набора
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.DtoModels.ResultEntryDto.ToString">
+            <summary>
+            Возвращает строковое представление результата обработки
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.INumberSetProcessor">
+            <summary>
+            Определяет контракт для процессора наборов чисел
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.INumberSetProcessor.Process">
+            <summary>
+            Запускает процесс обработки наборов чисел
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task1.SubTask2.INumberSetProcessor.GetResult">
+            <summary>
+            Возвращает результат обработки
+            </summary>
+            <returns>Объект с результатами обработки</returns>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1">
+            <summary>
+            Представляет результат выполнения всех запросов к серверам
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1.Responses">
+            <summary>
+            Список ответов от серверов
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1.TotalExecutionTime">
+            <summary>
+            Общее время выполнения всех запросов
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1.SuccessfulRequests">
+            <summary>
+            Количество успешных запросов (HTTP статус 2xx)
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1.FailedRequests">
+            <summary>
+            Количество неудачных запросов (ошибки сети, таймауты, HTTP ошибки)
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ExecutionResultDto`1.Version">
+            <summary>
+            Версия приложения (синхронная/асинхронная)
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto">
+            <summary>
+            Представляет конфигурацию сервера для выполнения HTTP запроса
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.Name">
+            <summary>
+            Название сервера (для идентификации в логах)
+            </summary>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.Url">
+            <summary>
+            URL сервера (полный адрес с протоколом)
+            </summary>
+            <example>https://jsonplaceholder.typicode.com/users</example>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.Method">
+            <summary>
+            HTTP метод запроса (GET/POST/PUT/DELETE)
+            </summary>
+            <remarks>По умолчанию используется GET</remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.Body">
+            <summary>
+            Тело запроса для методов POST/PUT (в формате объекта)
+            </summary>
+            <remarks>
+            Будет автоматически сериализован в JSON.
+            Для GET запросов игнорируется.
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.TimeoutSeconds">
+            <summary>
+            Таймаут запроса в секундах
+            </summary>
+            <remarks>
+            По умолчанию 30 секунд.
+            При превышении таймаута будет выброшено исключение.
+            </remarks>
+        </member>
+        <member name="P:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.Headers">
+            <summary>
+            Заголовки HTTP запроса (опционально)
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.ToString">
+            <summary>
+            Возвращает строковое представление конфигурации сервера
+            </summary>
+            <returns>Строка в формате "Название: URL (Метод)"</returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto.IsValid">
+            <summary>
+            Проверяет корректность конфигурации
+            </summary>
+            <returns>true, если конфигурация валидна</returns>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task2.IRequestService">
+            <summary>
+            Интерфейс для реализации методов опроса другого сервиса
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.IRequestService.FetchData(System.String)">
+            <summary>
+            Отправить запрос к сервису
+            </summary>
+            <param name="url">Веб-адрес</param>
+            <returns>Ответ от сервиса</returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.IRequestService.FetchDataAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Отправить запрос к сервису
+            </summary>
+            <param name="url">Веб-адрес</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <returns>Ответ от сервиса</returns>
+        </member>
+        <member name="T:Study.LabWork2.Abstractions.Feature.Task2.IServerRequestApp">
+            <summary>
+            Общий интерфейс для всех версий приложения
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.IServerRequestApp.ExecuteRequests``1(Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto[])">
+            <summary>
+            Выполняет запросы к серверам
+            </summary>
+            <param name="servers">Список конфигураций серверов</param>
+            <returns>Результат выполнения</returns>
+        </member>
+        <member name="M:Study.LabWork2.Abstractions.Feature.Task2.IServerRequestApp.GetVersion">
+            <summary>
+            Возвращает название версии
+            </summary>
+            <returns>Название версии</returns>
+        </member>
+    </members>
+</doc>

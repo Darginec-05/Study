@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Study.LabWork2</name>
+    </assembly>
+    <members>
+        <member name="T:Study.LabWork2.Feature.Task1.SubTask2.NumberSetProcessor">
+            <summary>
+            Определяет реализацию для процессора наборов чисел
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Feature.Task2.AsynchronousServerRequestApp">
+            <summary>
+            Асинхронная версия приложения (с использованием async/await)
+            </summary>
+        </member>
+        <member name="M:Study.LabWork2.Feature.Task2.AsynchronousServerRequestApp.ExecuteRequestsAsync``1(Study.LabWork2.Abstractions.Feature.Task2.DtoModels.ServerConfigDto[])">
+            <summary>
+            Асинхронное выполнение запросов
+            </summary>
+        </member>
+        <member name="T:Study.LabWork2.Feature.Task2.SynchronousServerRequestApp">
+            <summary>
+            Синхронная версия приложения (без использования async/await)
+            </summary>
+        </member>
+    </members>
+</doc>
