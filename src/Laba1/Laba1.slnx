@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../build.settings.props" />
+    <File Path="../readme-generation.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="Study.LabWork1/Study.LabWork1.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="Study.LabWork1.UnitTests/Study.LabWork1.UnitTests.csproj" />
+  </Folder>
+</Solution>

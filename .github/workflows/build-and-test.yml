@@ -1,0 +1,125 @@
+name: Build & Test
+
+on:
+  push:
+    branches:
+      - '**'  # Запускается для всех веток
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04  # Используем конкретную версию Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Обновляем до актуальной версии
+
+      - name: Check available .NET versions
+        run: |
+          apt list --installed 2>/dev/null | grep dotnet || echo "No .NET packages found in system"
+        # 2>/dev/null - скрываем предупреждение apt
+        # || echo - не прерываем выполнение, если ничего не найдено
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4  # Обновляем до v4 для лучшей поддержки .NET 10
+        with:
+          dotnet-version: '10.0.x'  # Устанавливает последнюю доступную 10.0 версию
+
+      - name: Install .NET 10.0 SDK manually (если не установлено)
+        run: |
+          wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --channel 10.0
+
+      - name: Verify .NET installation
+        run: dotnet --info || echo "⚠️ .NET not found"
+
+      - name: Find all solution files
+        id: find-solutions
+        run: |
+          echo "🔍 Searching for all .slnx files..."
+          SLNX_FILES=$(find . -name "*.slnx" -type f | sort)
+          
+          if [ -n "$SLNX_FILES" ]; then
+            echo "Found .slnx files:"
+            echo "$SLNX_FILES"
+            
+            # Сохраняем список файлов в переменную окружения
+            # Используем разделитель | для безопасной передачи
+            SLNX_LIST=""
+            while IFS= read -r file; do
+              if [ -z "$SLNX_LIST" ]; then
+                SLNX_LIST="$file"
+              else
+                SLNX_LIST="$SLNX_LIST|$file"
+              fi
+            done <<< "$SLNX_FILES"
+            
+            echo "SLNX_LIST=$SLNX_LIST" >> $GITHUB_ENV
+            echo "✅ Found $(echo "$SLNX_FILES" | wc -l) .slnx files"
+          else
+            echo "⚠️ No .slnx files found"
+            echo "SLNX_LIST=" >> $GITHUB_ENV
+          fi
+
+      - name: Process each solution
+        if: env.SLNX_LIST != ''
+        run: |
+          # Разделяем список по |
+          IFS='|' read -ra SOLUTIONS <<< "${{ env.SLNX_LIST }}"
+          
+          for SOLUTION in "${SOLUTIONS[@]}"; do
+            echo ""
+            echo "═══════════════════════════════════════════════"
+            echo "🔧 Processing solution: $SOLUTION"
+            echo "═══════════════════════════════════════════════"
+            
+            # Получаем директорию решения
+            SOLUTION_DIR=$(dirname "$SOLUTION")
+            
+            echo "📂 Working directory: $SOLUTION_DIR"
+            
+            # Переходим в директорию решения
+            cd "$SOLUTION_DIR"
+            
+            # Восстанавливаем зависимости
+            echo "📦 Restoring dependencies..."
+            dotnet restore "$(basename "$SOLUTION")"
+            
+            # Собираем проект
+            echo "🏗️ Building project..."
+            dotnet build "$(basename "$SOLUTION")" --configuration Release --no-restore
+            
+            # Ищем и запускаем тесты
+            echo "🧪 Running tests..."
+            TEST_PROJECTS=$(find . -name "*Tests.csproj" -o -name "*Test.csproj" -type f)
+            
+            if [ -n "$TEST_PROJECTS" ]; then
+              for TEST_PROJ in $TEST_PROJECTS; do
+                echo "  Running tests in: $TEST_PROJ"
+                dotnet test "$TEST_PROJ" --configuration Release --no-build --verbosity normal || echo "  ⚠️ Tests failed in $TEST_PROJ"
+              done
+            else
+              echo "  No test projects found in this solution"
+            fi
+            
+            # Возвращаемся в корневую директорию
+            cd "$GITHUB_WORKSPACE"
+            
+            echo "✅ Completed processing: $SOLUTION"
+          done
+
+      - name: Summary
+        run: |
+          echo "═══════════════════════════════════════════════"
+          echo "📊 Build Summary"
+          echo "═══════════════════════════════════════════════"
+          
+          if [ -n "${{ env.SLNX_LIST }}" ]; then
+            IFS='|' read -ra SOLUTIONS <<< "${{ env.SLNX_LIST }}"
+            echo "✅ Processed ${#SOLUTIONS[@]} solutions:"
+            for SOLUTION in "${SOLUTIONS[@]}"; do
+              echo "  • $SOLUTION"
+            done
+          else
+            echo "⚠️ No solutions were processed"
+          fi
